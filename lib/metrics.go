@@ -39,9 +39,9 @@ type Metrics struct {
 	// StatusCodes is a histogram of the responses' status codes.
 	StatusCodes map[string]int `json:"status_codes"`
 	// Errors is a set of unique errors returned by the targets during the attack.
-	Errors []string `json:"errors"`
+	Errors map[string]int `json:"errors"`
 
-	errors  map[string]struct{}
+	//errors  map[string]struct{}
 	success uint64
 }
 
@@ -74,9 +74,10 @@ func (m *Metrics) Add(r *Result) {
 	}
 
 	if r.Error != "" {
-		if _, ok := m.errors[r.Error]; !ok {
-			m.errors[r.Error] = struct{}{}
-			m.Errors = append(m.Errors, r.Error)
+		if _, ok := m.Errors[r.Error]; !ok {
+			m.Errors[r.Error] = 1
+		} else {
+			m.Errors[r.Error]++
 		}
 	}
 
@@ -119,12 +120,8 @@ func (m *Metrics) init() {
 		m.StatusCodes = map[string]int{}
 	}
 
-	if m.errors == nil {
-		m.errors = map[string]struct{}{}
-	}
-
 	if m.Errors == nil {
-		m.Errors = make([]string, 0)
+		m.Errors = map[string]int{}
 	}
 }
 

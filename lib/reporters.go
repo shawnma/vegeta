@@ -102,8 +102,8 @@ func NewTextReporter(m *Metrics) Reporter {
 			return err
 		}
 
-		for _, e := range m.Errors {
-			if _, err = fmt.Fprintln(tw, e); err != nil {
+		for k, v := range m.Errors {
+			if _, err = fmt.Fprintf(tw, "%d: %s\n", v, k ); err != nil {
 				return err
 			}
 		}
