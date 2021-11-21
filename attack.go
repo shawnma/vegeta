@@ -38,7 +38,7 @@ func attackCmd() command {
 	fs.StringVar(&opts.certf, "cert", "", "TLS client PEM encoded certificate file")
 	fs.StringVar(&opts.keyf, "key", "", "TLS client PEM encoded private key file")
 	fs.Var(&opts.rootCerts, "root-certs", "TLS root certificate files (comma separated list)")
-	fs.BoolVar(&opts.http2, "http2", true, "Send HTTP/2 requests when supported by the server")
+	fs.BoolVar(&opts.http2, "http2", false, "Send HTTP/2 requests when supported by the server")
 	fs.BoolVar(&opts.h2c, "h2c", false, "Send HTTP/2 requests without TLS encryption")
 	fs.BoolVar(&opts.insecure, "insecure", false, "Ignore invalid server TLS certificates")
 	fs.BoolVar(&opts.lazy, "lazy", false, "Read targets lazily")
